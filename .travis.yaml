@@ -1,0 +1,21 @@
+sudo: required
+service:
+  - docker
+
+before_install:
+  - docker build -t kapalal/react-test -f ./client/Dockerfile.dev ./client/
+
+
+script:
+  - docker run kapalal/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t kapalal/multi-client  ./client/
+  - docker build -t kapalal/multi-nginx ./nginx
+  - docker build -t kapalal/multi-worker ./worker
+  - docker build -t kapalal/multi-server ./server
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push kapalal/multi-client
+  - docker push kapalal/multi-nginx
+  - docker push kapalal/multi-worker
+  - docker push kapalal/multi-server 
