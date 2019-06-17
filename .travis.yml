@@ -19,3 +19,16 @@ after_success:
   - docker push kapalal11/multi-nginx
   - docker push kapalal11/multi-worker
   - docker push kapalal11/multi-server 
+
+deploy:
+ provider: elasticbeanstalk
+ region: eu-west-3
+ app: multi-docker
+ env: MultiDocker-env
+ bucket_name: elasticbeanstalk-eu-west-3-624758150896
+ bucket_path: multi-docker
+ on:
+    branch: master
+ access_key_id: $AWS_ACCESS_KEY
+ secret_access_key:
+   secure: $AWS_SECRET_KEY
