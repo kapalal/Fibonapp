@@ -5,7 +5,7 @@
         "name":"client",
         "image": "kapalal11/multi-client",
         "hostname": "client",
-        "essential": false
+        "essential": false,
 	"memory": 128
     },
 
